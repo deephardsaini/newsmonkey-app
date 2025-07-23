@@ -59,9 +59,7 @@ const News = ({ country, pageSize, category, setProgress }) => {
     }
 
     if (setProgress) setProgress(30);
-
     const parseData = await response.json();
-
     if (setProgress) setProgress(70);
 
     setArticles((prevArticles) =>
@@ -69,10 +67,9 @@ const News = ({ country, pageSize, category, setProgress }) => {
     );
     setPage(nextPage);
     setTotalResults(parseData.totalResults || 0);
-
     setHasMore(
       articles.length + (parseData.articles?.length || 0) <
-        (parseData.totalResults || 0)
+      (parseData.totalResults || 0)
     );
 
     if (setProgress) setProgress(100);
@@ -88,7 +85,16 @@ const News = ({ country, pageSize, category, setProgress }) => {
         dataLength={articles.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        loader={<img src={spinner} alt="Loading more..." style={{ display: "block", margin: "auto", width: "40px" }} />}
+        loader={
+          <div className="text-center my-3">
+            <img src={spinner} alt="Loading..." style={{ width: "40px" }} />
+          </div>
+        }
+        endMessage={
+          <p className="text-center mt-4">
+            <b>Yay! You have seen all the news.</b>
+          </p>
+        }
       >
         <div className="row mt-4 gx-0">
           {articles.map((element, index) => (
@@ -96,7 +102,10 @@ const News = ({ country, pageSize, category, setProgress }) => {
               <Newsitem
                 title={element.title}
                 description={element.description}
-                imageUrl={element.urlToImage}
+                imageUrl={
+                  element.urlToImage ||
+                  "https://www.dianomi.com/img/a/sav2/349880/4/300x160.jpg"
+                }
                 url={element.url}
                 author={element.author}
                 date={element.publishedAt}
