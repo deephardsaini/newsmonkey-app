@@ -8,7 +8,7 @@ export class News extends Component {
   static defaultProps = {
     country: "us",
     pageSize: 15,
-    category: "general",
+    category: "general",  
   };
 
   static propTypes = {
@@ -38,8 +38,8 @@ export class News extends Component {
   const { pageSize, country, category } = this.props;
   const apiKey = process.env.REACT_APP_NEWS_API_KEY;
 
-  const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}&page=${page}&pageSize=${pageSize}`;
-  
+ const url = `/api/news?country=${country}&category=${category}&page=${page}&pageSize=${pageSize}`;
+
   const response = await fetch(url);
 
   // ⛔ Check for 429 error
@@ -118,7 +118,7 @@ export class News extends Component {
           </div>
         )}
 
-        <InfiniteScroll
+        <InfiniteScroll      
           dataLength={this.state.articles.length}
           next={this.fetchMoreData}
           hasMore={this.state.hasMore}

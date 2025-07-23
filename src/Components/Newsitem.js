@@ -4,7 +4,7 @@ export class Newsitem extends Component {
   render() {
     const { title, description, imageurl, url, author, date, source } =
       this.props;
-
+     
     return (
       <div>
         <div className="card mt-3 mx-2">
@@ -17,7 +17,7 @@ export class Newsitem extends Component {
               {source}
             </span>
             <h5 className="card-title">{title}</h5>
-            <p className="card-text">{description}... </p>
+            <p className="card-text">{description}... </p> 
             <p className="card-text">
               <small>
                 By {!author ? "Unknown" : author} on{" "}
