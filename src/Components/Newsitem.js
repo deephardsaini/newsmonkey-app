@@ -1,38 +1,46 @@
-import React, { Component } from "react";
+import React from "react";
 
-export class Newsitem extends Component {
-  render() {
-    const { title, description, imageurl, url, author, date, source } =
-      this.props;
-     
-    return (
-      <div>
-        <div className="card mt-3 mx-2">
-          <img src={imageurl} className="card-img-top" alt="News" />
-          <div className="card-body">
-            <span
-              className="position-absolute top-0 translate-middle badge rounded-pill bg-danger"
-              style={{ left: "80%", zIndex: 1 }}
-            >
-              {source}
-            </span>
-            <h5 className="card-title">{title}</h5>
-            <p className="card-text">{description}... </p> 
-            <p className="card-text">
-              <small>
-                By {!author ? "Unknown" : author} on{" "}
-                {new Date(date).toGMTString()}
-              </small>
-            </p>
+const Newsitem = (props) => {
+  const { title, description, imageUrl, url, author, date, source } = props;
 
-            <a href={url} target="_blank" className="btn btn-dark btn-sm">
-              Read More
-            </a>
-          </div>
-        </div>
+  const fallbackImage =
+    "https://via.placeholder.com/400x200.png?text=No+Image+Available";
+
+  return (
+    <div className="card mt-3 mx-2">
+      <img
+        src={imageUrl || fallbackImage}
+        className="card-img-top"
+        alt="News"
+        style={{ height: "200px", objectFit: "cover" }}
+      />
+      <div className="card-body position-relative">
+        <span
+          className="position-absolute top-0 translate-middle badge rounded-pill bg-danger"
+          style={{ left: "80%", zIndex: 1 }}
+        >
+          {source}
+        </span>
+        <h5 className="card-title">{title || "No Title"}</h5>
+        <p className="card-text">
+          {description ? `${description}...` : "No Description"}
+        </p>
+        <p className="card-text">
+          <small className="text-muted">
+            By {author || "Unknown"} on {new Date(date).toGMTString()}
+          </small>
+        </p>
+        <a
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          className="btn btn-sm btn-dark"
+        >
+          Read More
+        </a>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Newsitem;
